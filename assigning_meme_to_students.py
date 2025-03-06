@@ -6,8 +6,8 @@ class Database:
         try:
             self.user = "admin"
             self.dsn = "memed_high"
-            self.pw = "370822@Deepesh"
-            self.wallet_pw = "370822@Deepesh"
+            self.pw = "password"
+            self.wallet_pw = "password"
 
             self.con = oracledb.connect(
                 user=self.user,

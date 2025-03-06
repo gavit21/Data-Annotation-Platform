@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Meme Rating</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fafafa;
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="number"],
+        textarea {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        textarea {
+            height: 80px;
+            resize: none;
+        }
+
+        select {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        p {
+            text-align: center;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Meme Rating!</h1>
+
+        {% if memes %}
+            <h2>Your Assigned Memes:</h2>
+            <ul>
+                {% for meme in memes %}
+                    <li>
+                        <img src="{{ url_for('static', filename='memes/' + meme[1]) }}" alt="Meme Image">
+                        <form action="{{ url_for('rate_meme') }}" method="POST">
+                            <input type="hidden" name="meme_id" value="{{ meme[0] }}">
+
+                            <label for="rating">Rate how this meme is funny :</label>
+                            <input type="number" id="rating" name="rating" min="1" max="5" required>
+
+                            <label for="classification">Classification:</label>
+                            <select id="classification" name="classification" required>
+                                <option value="" disabled selected>Select a category</option>
+                                <option value="Religious">Religious</option>
+                                <option value="Political">Political</option>
+                                <option value="Sports">Sports</option>
+                                <option value="Humor">Humor</option>
+                                <option value="Sarcasm">Sarcasm</option>
+                                <option value="Nudity">Nudity</option>
+                            </select>
+
+                            <label for="comment">Tell Why the meme is funny?:</label>
+                            <textarea id="comment" name="comment" required></textarea>
+
+                            <button type="submit">Submit</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No memes assigned to you at this time. Please check back later.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
